@@ -27,30 +27,48 @@
 </template>
 
 <script>
+import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
-      name:"",
-      email:"",
-      password:"",
-    };
+      name: null,
+      email: null,
+      password: null,
+    }
   },
   methods: {
-    async login() {
-      try {
-        await this.$auth.loginWith("laravelJWT", {
-          data: {
-            email: this.email,
-            password: this.password,
-          },
-        });
-        this.$router.push("/login");
-      } catch {
-        alert("メールアドレスまたはパスワードが間違っております");
+    register() {
+      if (!this.name || !this.email || !this.password) {
+        alert('ユーザーネーム、メールアドレスまたはパスワードが入力されていません。')
+        return
       }
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.name,this.email, this.password)
+        .then((data) => {
+          data.user.sendEmailVerification().then(() => {
+            this.$router.replace('/login')
+          })
+        })
+        .catch((error) => {
+          switch (error.code) {
+            case 'auth/invalid-email':
+              alert('メールアドレスの形式が違います。')
+              break
+            case 'auth/email-already-in-use':
+              alert('このメールアドレスはすでに使われています。')
+              break
+            case 'auth/weak-password':
+              alert('パスワードは6文字以上で入力してください。')
+              break
+            default:
+              alert('エラーが起きました。しばらくしてから再度お試しください。')
+              break
+          }
+        })
     },
   },
-};
+}
 </script>
 
 <style>
