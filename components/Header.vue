@@ -15,8 +15,7 @@ header{
 }
 
 img{
-  width:150px;
-  height: 50px;
+  width: 15%;
   margin: 10px;
 }
 

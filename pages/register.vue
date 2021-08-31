@@ -44,7 +44,7 @@ export default {
       }
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.name,this.email, this.password)
+        .createUserWithEmailAndPassword(this.email, this.password)
         .then((data) => {
           data.user.sendEmailVerification().then(() => {
             this.$router.replace('/login')
@@ -79,6 +79,7 @@ body{
 p{
   font-weight: bold;
   padding: 20px;
+  color: black;
 }
 
 .container{
@@ -94,6 +95,7 @@ p{
 }
 
 input{
+  color: black;
   margin: 10px;
   width: 300px ;
   height: 40px;
