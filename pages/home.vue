@@ -22,7 +22,20 @@
 
 <script>
 export default {
-  layout: 'pattern01'
+  layout: 'pattern01',
+
+  data(){
+    return{
+    shareLists:[],
+    }
+  },
+
+  methods: {
+    async getShare(){
+    const resData = await this.$axios.get("http://127.0.0.1:8000/api/share/");
+    this.shareLists = resData.data.data;
+    }
+  }
 }
 
 </script>

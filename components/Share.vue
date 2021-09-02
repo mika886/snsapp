@@ -23,6 +23,7 @@ export default {
       shareLists:[],
     };
   },
+
   methods: {
     logout() {
       firebase
@@ -34,7 +35,7 @@ export default {
         })
     },
     async getShare(){
-      const resData = await this.$$axios.get("http://127.0.0.1:8000/api/share/");
+      const resData = await this.$axios.get("http://127.0.0.1:8000/api/share/");
       this.shareLists = resData.data.data;
     },
 
@@ -42,7 +43,7 @@ export default {
       const sendData={
         share:this.newShare,
       };
-      await this.axios.post("http://127.0.0.1:8000/api/share/", sendData);
+      await this.$axios.post("http://127.0.0.1:8000/api/share/", sendData);
       this.getShare();
     },
     async deleteShare(id) {
