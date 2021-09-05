@@ -39,7 +39,7 @@ export default {
   methods: {
     async deleteShare(id) {
     await this.$axios.delete("http://127.0.0.1:8000/api/share/" + id);
-    this.getShare;
+    this.$router.go({path: '/home', force: true})
     },
 
     counter:function(){

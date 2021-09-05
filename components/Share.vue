@@ -49,6 +49,7 @@ export default {
       };
       await this.$axios.post("http://127.0.0.1:8000/api/share/", sendData);
       this.getShare();
+      this.$router.go({path: '/home', force: true})
     },
     async deleteShare(id) {
       await this.$axios.delete("http://127.0.0.1:8000/api/share/" + id);
