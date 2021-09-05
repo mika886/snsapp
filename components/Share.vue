@@ -1,4 +1,5 @@
 <template>
+  <validation-observer ref="obs" v-slot="ObserverProps">
     <div class="split-box left-box">
       <img src="../img/logo.png">
       <NuxtLink to="/home" tag="a" class="home-link">ホーム</NuxtLink><br>
@@ -6,12 +7,15 @@
       <div class="share-group">
         <label for="share">シェア</label>
         <div class="share-text">
-          <textarea name="share" id="share" v-model="newShare" cols="30" rows="10"></textarea>
+          <validation-provider v-slot="{ errors }" rules="required|max:120">
+          <textarea name="シェア" id="share" v-model="newShare" cols="30" rows="10"></textarea>
+          <div class="error" style="color:red;">{{ errors[0] }}</div>
+          </validation-provider>
         </div>
        </div>
        <button class="btn" @click="insertShare">シェアする</button>
-
     </div>
+  </validation-observer>
 </template>
 
 <script>
@@ -19,7 +23,7 @@ import firebase from '~/plugins/firebase'
 export default {
   data(){
     return{
-      newShare:"",
+      newShare:null,
       shareLists:[],
     };
   },

@@ -8,9 +8,9 @@
       <td>
         <div class="sns-action">
           <p class="ttl">{{item.id}}</p>
-          <p><img src="../img/heart.png"></p>
-          <p>0</p>
-          <p @click="deleteShare(item.id)"><img src="../img/cross.png"></p>
+          <p@click="counter()"><img src="../img/heart.png"></p>
+          <p>{{count}}</p>
+          <p@click="deleteShare(item.id)"><img src="../img/cross.png"></p>
           <nuxt-link to="/comment"><img src="../img/detail.png"></nuxt-link>
         </div>
         <p class="share-text">{{item.share}}</p>
@@ -27,23 +27,34 @@ export default {
   data(){
     return{
     shareLists:[],
+    count:0
     }
   },
 
-  methods: {
-    async getShare(){
+  created: async function getShare(){
     const resData = await this.$axios.get("http://127.0.0.1:8000/api/share/");
     this.shareLists = resData.data.data;
+  },
+
+  methods: {
+    async deleteShare(id) {
+    await this.$axios.delete("http://127.0.0.1:8000/api/share/" + id);
+    this.getShare;
+    },
+
+    counter:function(){
+      this.count++;
     }
   }
-}
+
+  }
 
 </script>
 
 <style>
 
 table{
-  border: 1px solid white;
+  border: 1px  solid white;
   border-radius:5px ;
   width: 80vw;
 }
@@ -51,7 +62,10 @@ table{
 th{
   text-align: left;
   padding: 10px;
-  border-bottom:1px solid white;
+}
+
+td{
+  border-top:1px solid white ;
 }
 
 .sns-action{
@@ -63,6 +77,7 @@ th{
 img{
   width: 30px;
   margin: 0 20px;
+  cursor: pointer;
 }
 
 .ttl{

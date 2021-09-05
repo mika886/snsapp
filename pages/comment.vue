@@ -39,7 +39,6 @@ export default {
 .comment-line{
   text-align: center;
   border-top:1px solid white ;
-  border-bottom:1px solid white ;
 }
 
 input{
